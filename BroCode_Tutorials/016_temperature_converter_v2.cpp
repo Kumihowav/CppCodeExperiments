@@ -7,11 +7,12 @@ void chooseOutputUnit();
 void convertTemp();
 void calcReset();
 
-int i = 0;
 char initialUnit;
 double tempIn;
 char outputUnit;
 double tempOut;
+char reset;
+int j;
 
 using std::cout;
 using std::cin;
@@ -21,22 +22,29 @@ using std::streamsize;
 int main()
 {
     cout << "*****Kumitemp Converter*****" << '\n';
+    j = 0;
 
-    chooseInitialUnit();
-    chooseTemp();
-    chooseOutputUnit();
-    convertTemp();
-
-    if(outputUnit == 'K')
+    while(j == 0)
     {
-        char degreeSymbolToggle = '';
-        cout << tempIn << " ";
-    }
-    else
-    {
-        char degreeSymbolToggle = '°';        
-    }
+        chooseInitialUnit();
+        chooseTemp();
+        chooseOutputUnit();
+        convertTemp();
 
+        // calculator output
+        if(outputUnit == 'K') {
+            cout << tempIn << "°" << initialUnit << " converts to " << tempOut << outputUnit << '\n';
+        }
+        else if(initialUnit == 'K') {
+            cout << tempIn << initialUnit << " converts to " << tempOut << "°" << outputUnit << '\n';
+        }
+        else {
+            cout << tempIn << "°" << initialUnit << " converts to " << tempOut << "°" << outputUnit << '\n';
+        }
+
+        calcReset();        
+    }
+    cout << "Thank you for using this program" << '\n';
     cout << "****************************";
 
     return 0;
@@ -45,6 +53,7 @@ int main()
 void chooseInitialUnit()   // choosing unit of temperature
 {
     cout << "Input initial unit (C, F or K): ";
+    int i = 0;
     
     while(i == 0)   
     {
@@ -87,7 +96,7 @@ void chooseTemp()   // choosing temperature to convert
 void chooseOutputUnit()   // choosing unit of temperature
 {
     cout << "Input unit to convert to (C, F or K): ";
-    i = 0;
+    int i = 0;
 
     while(i == 0)   
     {
@@ -125,22 +134,49 @@ void chooseOutputUnit()   // choosing unit of temperature
 
 void convertTemp()  // conversion matrix
 {
-         if(initialUnit == 'K' && outputUnit == 'C') {
+         if(initialUnit == 'K' && outputUnit == 'C') {  // kelvin to celsius
         tempOut = tempIn - 273.15;
     }
-    else if(initialUnit == 'C' && outputUnit == 'K') {
+    else if(initialUnit == 'C' && outputUnit == 'K') {  // celsius to kelvin
         tempOut = tempIn + 273.15;
     }
-    else if(initialUnit == 'K' && outputUnit == 'F') {
-        tempOut = (tempIn - 273.15) * (9 / 5) + 32;
+    else if(initialUnit == 'K' && outputUnit == 'F') {  // kelvin to fahrenheit
+        tempOut = (tempIn - 273.15) * (9.0 / 5) + 32;
     }
-    else if(initialUnit == 'F' && outputUnit == 'K') {
-        tempOut = (tempIn - 32) * (5 / 9) + 273.15;
+    else if(initialUnit == 'F' && outputUnit == 'K') {  // fahrenheit to kelvin
+        tempOut = (tempIn - 32) * (5.0 / 9) + 273.15;
     }
-    else if(initialUnit == 'C' && outputUnit == 'F') {
-        tempOut = (tempIn * (9 / 5) ) + 32;
+    else if(initialUnit == 'C' && outputUnit == 'F') {  // celsius to fahrenheit
+        tempOut = (tempIn * (9.0 / 5) ) + 32;
     }
-    else   (initialUnit == 'F' && outputUnit == 'C') {
-        tempOut = (tempIn - 32) * (5 / 9);
+    else if(initialUnit == 'F' && outputUnit == 'C') {  // fahrenheit to celsius
+        tempOut = (tempIn - 32) * (5.0 / 9);
+    }
+}
+
+void calcReset()    // check if user wants to restart
+{
+    cout << "Do you want to convert another temperature? (Y or N): ";
+    int i = 0;
+
+    while(i == 0)
+    {
+        cin >> reset;
+
+        switch(reset)
+        {
+            case 'Y': case 'y': 
+                j = 0;
+                i = 1;
+                break;
+            case 'N': case 'n':
+                j = 1;
+                i = 1;
+                break;
+            default:
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Re-enter valid input (Y or N): ";
+        }
     }
 }

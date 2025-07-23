@@ -55,7 +55,7 @@ void userInput() {     //self-made function, called in the main program
 
     std::cout << "Input accepted. Enter #1: ";
 
-    while (!(std::cin >> num1)) {      //'std::cin' will output true if the input is valid. this loops as long as the input wasn't (!) valid
+    while (!(std::cin >> num1)) {      //'std::cin' will output a true flag if the input is valid. this loops as long as the input wasn't (!) valid
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "Re-enter valid input #1 (A number!): ";

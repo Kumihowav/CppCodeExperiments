@@ -30,7 +30,7 @@ int main()
     if(outputUnit == 'K')
     {
         char degreeSymbolToggle = '';
-        cout << tempIn << " "
+        cout << tempIn << " ";
     }
     else
     {
